@@ -1,0 +1,49 @@
+Arguments: 
+  /Users/alexaguilar/.nvm/versions/node/v16.13.0/bin/node /Users/alexaguilar/.yarn/bin/yarn.js add prettier tslint tslint-config-prettieraws-sdk -DE
+
+PATH: 
+  /Users/alexaguilar/.yarn/bin:/Users/alexaguilar/.config/yarn/global/node_modules/.bin:/Users/alexaguilar/.nvm/versions/node/v16.13.0/bin:/Users/alexaguilar/.rbenv/shims:/usr/local/opt/ruby/bin:/Users/alexaguilar/.istio-1.9.1/bin:/Users/alexaguilar/go/bin:/opt/homebrew/bin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/alexaguilar/.yarn/bin:/Users/alexaguilar/.config/yarn/global/node_modules/.bin:/Users/alexaguilar/.nvm/versions/node/v16.13.0/bin:/Users/alexaguilar/.rbenv/shims:/usr/local/opt/ruby/bin:/Users/alexaguilar/.istio-1.9.1/bin:/Users/alexaguilar/go/bin:/opt/homebrew/bin:/Users/alexaguilar/.local/bin:/Users/alexaguilar/Library/Python/3.8/bin:/Users/alexaguilar/.flutter/bin:/Users/alexaguilar/.rvm/bin:/Users/alexaguilar/.local/bin:/Users/alexaguilar/Library/Python/3.8/bin:/Users/alexaguilar/.flutter/bin:/Users/alexaguilar/.rvm/bin
+
+Yarn version: 
+  1.22.18
+
+Node version: 
+  16.13.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/tslint-config-prettieraws-sdk: Not found
+      at Request.params.callback [as _callback] (/Users/alexaguilar/.yarn/lib/cli.js:66138:18)
+      at Request.self.callback (/Users/alexaguilar/.yarn/lib/cli.js:140883:22)
+      at Request.emit (node:events:390:28)
+      at Request.<anonymous> (/Users/alexaguilar/.yarn/lib/cli.js:141855:10)
+      at Request.emit (node:events:390:28)
+      at IncomingMessage.<anonymous> (/Users/alexaguilar/.yarn/lib/cli.js:141777:12)
+      at Object.onceWrapper (node:events:509:28)
+      at IncomingMessage.emit (node:events:402:35)
+      at endReadableNT (node:internal/streams/readable:1343:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+
+npm manifest: 
+  {
+    "name": "bigbang",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "author": {
+      "name": "Alexandro Aguilar",
+      "email": "aleaguilar@palaceresorts.com"
+    },
+    "scripts": {
+      "build": "tsc",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
