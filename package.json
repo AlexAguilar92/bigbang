@@ -8,9 +8,12 @@
     "email": "aleaguilar@palaceresorts.com"
   },
   "scripts": {
-    "build": "tsc",
+    "start": "node lib/index.js",
     "test": "jest",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\""
+  },
+  "bin": {
+    "bigbang": "./src/index.js"
   },
   "devDependencies": {
     "@types/jest": "28.1.1",
@@ -18,8 +21,7 @@
     "@typescript-eslint/parser": "^5.27.1",
     "eslint": "8.17.0",
     "jest": "28.1.1",
-    "prettier": "2.6.2",
-    "ts-jest": "28.0.4"
+    "prettier": "2.6.2"
   },
   "files": [
     "lib/**/*"
