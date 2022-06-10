@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "type": "module",
   "author": {
     "name": "Alexandro Aguilar",
     "email": "aleaguilar@palaceresorts.com"
@@ -31,6 +32,7 @@
     "clone": "2.1.2",
     "commander": "^9.3.0",
     "git": "0.1.5",
+    "ora": "^6.1.0",
     "simple-git": "3.7.1"
   }
 }

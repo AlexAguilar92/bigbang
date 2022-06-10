@@ -1,12 +1,14 @@
 #! /usr/bin/env node
 
-const { program } = require('commander')
-const init = require('./commands/initCommand')
+import { program } from 'commander'
+import init from './commands/initCommand.js'
+// const init = require('./commands/initCommand')
+
 
 program
   .command('init')
   .description('Initializes a new project from the serverless template')
   .option('-n, --name <name>', 'The name of the project')
-  .action((name) => init(name))
+  .action((options) => init(options.name))
 
 program.parse()
