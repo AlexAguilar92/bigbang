@@ -1,8 +1,14 @@
-const clone = require('git-clone/promise');
+const simpleGit = require('simple-git');
+const git = simpleGit();
 
 const initFindRepository = (name = '') => {
-  clone('https://github.com/josdejong/ducktype', )
-  console.log(branch)
+  console.log(name)
+  git.clone(
+    'https://github.com/fbenitez/serverless-tsc-template.git',
+    name,
+    { '--branch': 'serverless-compose' }
+  );
+  
 }
 
 module.exports = {
