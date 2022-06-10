@@ -1,7 +1,7 @@
 const initRepository = require('../repository/initRepository');
 
-const init = (branch) => {
-  initRepository.initFindRepository(branch);
+const init = (name) => {
+  initRepository.initFindRepository(name);
 }
 
 module.exports = init
