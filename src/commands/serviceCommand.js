@@ -1,15 +1,15 @@
-import ora from 'ora';
+import ora from 'ora'
+import serviceUseCase from '../useCase/serviceUseCase.js';
 
 const service = async (options) => {
-  console.log('options', options)
-  console.log()
-  // const spinner = ora('Initializing project...').start();
-  
+  const { type, name } = options
+  const spinner = ora('creating service...').start()
+  const { result, error } = await serviceUseCase(type, name)
   if (result === 0) {
-    // spinner.succeed('Project initialized');
+    spinner.succeed('Service created')
   } else {
-    // spinner.fail('Error initializing project');
-    // console.error(error);
+    spinner.fail(`Error creating resource, ${error}`)
+    // console.error(error)
   }
 }
 

@@ -1,4 +1,4 @@
-import initUseCase from '../useCase/initUseCase.js'
+import serviceUseCase from '../useCase/serviceUseCase.js'
 
 const initAdapter = async (options) => {
   const { name } = options
@@ -7,4 +7,4 @@ const initAdapter = async (options) => {
   return { result, error }
 }
 
-export default initAdapter
+export default serviceAdapter

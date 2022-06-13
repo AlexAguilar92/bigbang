@@ -1,0 +1,14 @@
+services:
+
+  nodejs-service:
+    path: layers/lib
+
+  service-a:
+    path: services/servicea
+    dependsOn: nodejs-service
+
+  service-b:
+    path: services/serviceb
+    dependsOn:
+      - service-a
+      - nodejs-service

@@ -1,0 +1,18 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - node -v
+      - yarn
+      - yarn global add serverless@3.16.0
+      - sls -v
+  post_build:
+    commands:
+      - echo $STAGE
+      # - serverless deploy --verbose --stage $STAGE
+      # - cd services/outhouse && pwd && serverless deploy --verbose --stage $STAGE --region us-east-1
+      # - cd ../inhouse && pwd && serverless deploy --verbose --stage $STAGE --region us-east-1
+      # - cd ../hostess && pwd && serverless deploy --verbose --stage $STAGE --region us-east-1
+      # - cd services/hostess && pwd && serverless deploy --verbose --stage $STAGE --region us-east-1
+
+      - serverless deploy

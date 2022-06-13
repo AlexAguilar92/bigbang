@@ -1,4 +1,4 @@
-import { initFindRepository } from '../repository/initRepository.js'
+import { initFindRepository } from '../domain/repository/initRepository.js'
 import { rm, appendFile } from 'fs/promises'
 
 const initUseCase = async (name) => {
