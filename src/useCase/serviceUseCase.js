@@ -3,12 +3,12 @@ import fs from 'fs/promises'
 import { resolve } from 'path'
 
 const createOptions = {
-  service,
+  service: service.create,
   default: () => 1
 }
 
-const getCreateTypes = async (type) => {
-  return (createOptions[type] || createOptions.default)()
+const getCreateTypes = async (type, name, path) => {
+  return createOptions[type](name, path) || createOptions.default
 }
 
 const serviceUseCase = async (type, name) => {
@@ -24,14 +24,17 @@ const serviceUseCase = async (type, name) => {
     // console.log(resolve(path))
     if (files.includes('.bigbang.json')) {
       flag = true
+      break
     }
     path += '../'
     deepness++
   }
   // console.log('type', type)
-  const createOption = await getCreateTypes(type)
+  const createOption = await getCreateTypes(type, name, path)
   // console.log('createOption', createOption)
   if (createOption === 1) return { result: 1, error: 'invalid option' }
+
+  return createOption
 }
 
 

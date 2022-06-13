@@ -1,6 +1,8 @@
+import fs from 'fs/promises'
+
 const service = {
-  create: async (name) => {
-    console.log('creating service...', name)
+  create: async (name, path) => {
+    console.log('creating service...', name, path)
   }
 }
 
