@@ -17,6 +17,7 @@ const serviceUseCase = async (type, name) => {
   let deepness = 0
   
   while (!flag) {
+    console.log(path)
     if (deepness === 100) return { result: 1, error: 'no project found' }
     if (resolve(path) === '/') return { result: 1, error: 'no project found' }
     const files = await fs.readdir(path)
