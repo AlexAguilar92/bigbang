@@ -43,7 +43,7 @@ const serverlessFile = (name) => (
   module.exports = serverlessConfiguration;`
 )
 
-const tsconfigFile = (name) => (
+const tsconfigFile = () => (
   `
   {
     "extends": "./tsconfig.paths.json",
@@ -72,7 +72,7 @@ const tsconfigFile = (name) => (
   `  
 )
 
-const tsconfigPathsFile = (name) => (
+const tsconfigPathsFile = () => (
   `
   {
     "compilerOptions": {
@@ -83,12 +83,66 @@ const tsconfigPathsFile = (name) => (
       }
     }
   }
-  `  
+  `
+)
+
+const indexFile = (name) => (
+  `
+  export { default as ${ name } } from './${ name }';
+  `
+)
+
+const serviceIndexFile = (name) => (
+  `
+  import { handlerPath } from '@libs/handler-resolver';
+
+  export default {
+    handler: \`\${handlerPath(__dirname)}/handler.main\`,
+    events: [
+      {
+        http: {
+          method: 'get',
+          path: '${name}',
+        },
+      },
+    ],
+  };
+  `
+)
+
+const handlerFile = (name) => (
+  `import container from "../../inversify.config";
+import middy from "@middy/core";
+import httpJsonBodyParser from "@middy/http-json-body-parser";
+import { TYPES } from "../../../../../src/types";
+
+const get${name.charAt(0).toUpperCase()}${name.substring(1)} = middy(async (event) => {
+  const i${name.charAt(0).toUpperCase()}${name.substring(1)}Repository = container.get<I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository>(TYPES.${name.charAt(0).toUpperCase()}${name.substring(1)}Repository);
+  const response = await i${name.charAt(0).toUpperCase()}${name.substring(1)}Repository.findMany(event.queryStringParameters);
+  return response;
+});
+
+get${name.charAt(0).toUpperCase()}${name.substring(1)}.use(httpResponseHandlerMiddleware());
+
+export const main = middyfy(${name});
+  `
+)
+
+const handlerResolverFile = (name) => (
+`
+export const handlerPath = (context: string) => {
+  return \`\${context.split(process.cwd())[1].substring(1).replace(/\\\\/g, '/')}\`
+};  
+`
 )
 
 export default {
   genericService,
   serverlessFile,
   tsconfigFile,
-  tsconfigPathsFile
+  tsconfigPathsFile,
+  indexFile,
+  serviceIndexFile,
+  handlerFile,
+  handlerResolverFile,
 };

@@ -12,6 +12,7 @@ const getCreateTypes = async (type, name, path) => {
 }
 
 const serviceUseCase = async (type, name) => {
+  console.log('serviceUseCase', type, name)
   let flag = false
   let path = './'
   let deepness = 0
@@ -32,8 +33,9 @@ const serviceUseCase = async (type, name) => {
   }
   // console.log('type', type)
   const createOption = await getCreateTypes(type, name, path)
-  // console.log('createOption', createOption)
-  if (createOption === 1) return { result: 1, error: 'invalid option' }
+  console.log('createOption', createOption)
+  return createOption
+  // if (createOption === 1) return { result: 1, error: 'invalid option' }
 
   return createOption
 }

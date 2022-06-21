@@ -9,7 +9,7 @@ import service from './commands/serviceCommand.js'
 program
   .command('init')
   .description('Initializes a new project from the serverless template')
-  .option('-n, --name <name>', 'The name of the project')
+  .requiredOption('-n, --name <name>', 'The name of the project')
   .action((options) => init(options))
 
 program
