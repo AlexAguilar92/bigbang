@@ -128,11 +128,24 @@ export const main = middyfy(${name});
   `
 )
 
-const handlerResolverFile = (name) => (
+const handlerResolverFile = () => (
 `
 export const handlerPath = (context: string) => {
   return \`\${context.split(process.cwd())[1].substring(1).replace(/\\\\/g, '/')}\`
 };  
+`
+)
+
+const inversifyConfigFile = () => (
+  `import 'reflect-metadata';
+import { Container } from 'inversify';
+import { TYPES } from './types';
+
+/** Inversify Imports */
+
+const container: Container = new Container();
+
+/** Inversify Bindings */
 `
 )
 
@@ -145,4 +158,5 @@ export default {
   serviceIndexFile,
   handlerFile,
   handlerResolverFile,
+  inversifyConfigFile
 };
