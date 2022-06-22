@@ -1,5 +1,5 @@
 import fs from 'fs/promises'
-import { exists, existsSync } from 'fs'
+import { existsSync } from 'fs'
 import { resolve } from 'path'
 import generic from '../../assets/genericService.js'
 
@@ -16,13 +16,19 @@ const service = {
       if (!existsSync(`${path}services/${name}Service/src/inversify.config.ts`))
         await fs.appendFile(`${path}services/${name}Service/src/inversify.config.ts`, generic.inversifyConfigFile())
       const inversifyConfig = await fs.readFile(`${path}services/${name}Service/src/inversify.config.ts`)
-      inversifyConfig.toString().replace('/** Inversify Imports */', `/** Inversify Imports */
-      import I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository from '../../../../src/modules/${name.charAt(0).toUpperCase()}${name.substring(1)}/domain/repository/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository';
-      import ${name.charAt(0).toUpperCase()}${name.substring(1)}Repository from '../../../../src/modules/${name.charAt(0).toUpperCase()}${name.substring(1)}/domain/repository/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}Repository';
+      let updatedInversifyConfig = inversifyConfig.toString().replace('/** Inversify Imports */',
+`/** Inversify Imports */
+//#region ${name.charAt(0).toUpperCase()}${name.substring(1)} imports
+import I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository from '../../../../src/modules/${name.charAt(0).toUpperCase()}${name.substring(1)}/domain/repository/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository';
+import ${name.charAt(0).toUpperCase()}${name.substring(1)}Repository from '../../../../src/modules/${name.charAt(0).toUpperCase()}${name.substring(1)}/domain/repository/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}Repository';
+//#endregion
+`)
+      updatedInversifyConfig = updatedInversifyConfig.replace('/** Inversify Bindings */',
+`/** Inversify Bindings */
+//#region ${name.charAt(0).toUpperCase()}${name.substring(1)} bindings
+container.bind<I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository>(TYPES.${name.charAt(0).toUpperCase()}${name.substring(1)}Repository).to(${name.charAt(0).toUpperCase()}${name.substring(1)}Repository);
       `)
-      inversifyConfig.toString().replace('/** Inversify Bindings */', `/** Inversify Bindings */
-      container.bind<I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository>(TYPES.${name.charAt(0).toUpperCase()}${name.substring(1)}Repository).to(${name.charAt(0).toUpperCase()}${name.substring(1)}Repository);
-      `)
+      console.log("updatedInversifyConfig", updatedInversifyConfig)
       await fs.appendFile(`${path}/services/${name}Service/serverless.ts`, generic.serverlessFile(name))
       await fs.appendFile(`${path}/services/${name}Service/tsconfig.json`, generic.tsconfigFile())
       await fs.appendFile(`${path}/services/${name}Service/tsconfig.paths.json`, generic.tsconfigPathsFile(name))
