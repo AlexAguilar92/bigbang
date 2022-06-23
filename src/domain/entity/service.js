@@ -27,8 +27,9 @@ import ${name.charAt(0).toUpperCase()}${name.substring(1)}Repository from '../..
 `/** Inversify Bindings */
 //#region ${name.charAt(0).toUpperCase()}${name.substring(1)} bindings
 container.bind<I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository>(TYPES.${name.charAt(0).toUpperCase()}${name.substring(1)}Repository).to(${name.charAt(0).toUpperCase()}${name.substring(1)}Repository);
-      `)
+`)
       console.log("updatedInversifyConfig", updatedInversifyConfig)
+      await fs.writeFile(`${path}services/${name}Service/src/inversify.config.ts`, updatedInversifyConfig)
       await fs.appendFile(`${path}/services/${name}Service/serverless.ts`, generic.serverlessFile(name))
       await fs.appendFile(`${path}/services/${name}Service/tsconfig.json`, generic.tsconfigFile())
       await fs.appendFile(`${path}/services/${name}Service/tsconfig.paths.json`, generic.tsconfigPathsFile(name))
@@ -36,7 +37,15 @@ container.bind<I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository>(T
       await fs.appendFile(`${path}/services/${name}Service/src/functions/${name}/index.ts`, generic.serviceIndexFile(name))
       await fs.appendFile(`${path}/services/${name}Service/src/functions/${name}/handler.ts`, generic.handlerFile(name))
       await fs.appendFile(`${path}/services/${name}Service/src/libs/handler-resolver.ts`, generic.handlerResolverFile(name))
-
+      console.log(generic.typesFile())
+      if (!existsSync(`${path}src/types.ts`))
+        await fs.appendFile(`${path}src/types.ts`, generic.typesFile())
+      // const types = await fs.readFile()
+      console.log(resolve('path', path))
+      await fs.mkdir(`${path}src/modules/${name}/`)
+      await fs.mkdir(`${path}src/modules/${name}/adapter`)
+      await fs.mkdir(`${path}src/modules/${name}/domain`)
+      await fs.mkdir(`${path}src/modules/${name}/useCase`)
       // const createService = await fs.writeFile(`${path}/${name}.js`, `const ${name} = {};\n\nexport default ${name};`)
       return { result: 0, error: null }
     } catch (error) {

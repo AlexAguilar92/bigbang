@@ -149,6 +149,13 @@ const container: Container = new Container();
 `
 )
 
+const typesFile = () => (
+  `export const TYPES = {
+  
+}
+`
+)
+
 export default {
   genericService,
   serverlessFile,
@@ -158,5 +165,6 @@ export default {
   serviceIndexFile,
   handlerFile,
   handlerResolverFile,
-  inversifyConfigFile
+  inversifyConfigFile,
+  typesFile
 };
