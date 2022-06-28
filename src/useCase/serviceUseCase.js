@@ -12,13 +12,13 @@ const getCreateTypes = async (type, name, path) => {
 }
 
 const serviceUseCase = async (type, name) => {
-  console.log('serviceUseCase', type, name)
+  // console.log('serviceUseCase', type, name)
   let flag = false
   let path = './'
   let deepness = 0
   
   while (!flag) {
-    console.log(path)
+    // console.log(path)
     if (deepness === 100) return { result: 1, error: 'no project found' }
     if (resolve(path) === '/') return { result: 1, error: 'no project found' }
     const files = await fs.readdir(path)
@@ -33,7 +33,7 @@ const serviceUseCase = async (type, name) => {
   }
   // console.log('type', type)
   const createOption = await getCreateTypes(type, name, path)
-  console.log('createOption', createOption)
+  // console.log('createOption', createOption)
   return createOption
   // if (createOption === 1) return { result: 1, error: 'invalid option' }
 

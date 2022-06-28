@@ -156,64 +156,6 @@ const typesFile = () => (
 `
 )
 
-const repositoryFile = (name) => (
-`import "reflect-metadata";
-import { inject, injectable } from "inversify";
-import { BaseRepository, IUserRepository } from "../..";
-import { User } from "../";
-import IDBConnectionManager from "../../../shared/database/interface/IDBConnectionManager";
-import TYPES from "../../../types";
-import { EntityRepository } from "typeorm";
-
-@injectable()
-@EntityRepository(${name.charAt(0).toUpperCase()}${name.substring(1)})
-export default class ${name.charAt(0).toUpperCase()}${name.substring(1)}Repository extends BaseRepository<${name.charAt(0).toUpperCase()}${name.substring(1)}> implements I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository {
-  constructor(
-    @inject(TYPES.DBConnectionManager) iDBConnectionManager: IDBConnectionManager,
-  ) {
-    super(${name.charAt(0).toUpperCase()}${name.substring(1)}, iDBConnectionManager);
-  }
-}`)
-
-const iRepositoryFile = (name) => (
-`import { IRead, IWrite } from "../..";
-import { ${name.charAt(0).toUpperCase()}${name.substring(1)} } from "../";
-
-export default interface I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository extends IWrite<User>, IRead<User> {
-
-}
-`
-)
-
-const adapterFile = (name) => (
-`import "reflect-metadata";
-
-import { injectable, inject } from "inversify";
-
-import { TYPES } from "../../../../types";
-
-/**
- * @class ${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter
- * @implements {I${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter}
- * @description
- */
-
-@injectable()
-export class ${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter implements IBaseAdapter {
-
-  constructor() {}
-
-  /**
-   * @function findBanksByPagination
-   * @param 
-   * @returns
-   * @memberof IBankDomain
-   * @throws {Error}
-   */
-  async execute(pagination: IPaginationQueryDTO): Promise<IPaginationResponseDTO> {
-  }
-}
-`)
 
 export default {
   genericService,
@@ -225,6 +167,5 @@ export default {
   handlerFile,
   handlerResolverFile,
   inversifyConfigFile,
-  typesFile,
-  repositoryFile
+  typesFile
 };

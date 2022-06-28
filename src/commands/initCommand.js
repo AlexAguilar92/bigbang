@@ -8,7 +8,7 @@ const init = async (options) => {
     spinner.succeed(`Project initialized in ${options.name} now you can start coding! Just cd into the folder (${options.name}) and run "npm install"`)
   } else {
     spinner.fail('Error initializing project')
-    console.error(error)
+    // console.error(error)
   }
 }
 

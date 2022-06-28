@@ -4,3 +4,5 @@ const genericIEntityFile = (name) => (
 }
 `
 )
+
+export default genericIEntityFile

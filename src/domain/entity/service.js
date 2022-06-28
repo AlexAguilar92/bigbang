@@ -2,12 +2,28 @@ import fs from 'fs/promises'
 import { existsSync } from 'fs'
 import { resolve } from 'path'
 import generic from '../../assets/genericService.js'
+import genericAdapterCreateFile from '../../assets/adapter/genericAdapterCreateFile.js'
+import genericAdapterDeleteFile from '../../assets/adapter/genericAdapterDeleteFile.js'
+import genericAdapterFindFile from '../../assets/adapter/genericAdapterFindFile.js'
+import genericAdapterUpdateFile from '../../assets/adapter/genericAdapterUpdateFile.js'
+import genericEntityFile from '../../assets/domain/entity/implementation/genericEntityFile.js'
+import genericIEntityFile from '../../assets/domain/entity/interface/genericIEntityFile.js'
+import genericRepositoryFile from '../../assets/domain/repository/genericRepositoryFile.js'
+import genericIRepositoryFile from '../../assets/domain/repository/genericIRepositoryFile.js'
+import genericUseCaseFindFile from '../../assets/useCase/genericUseCaseFindFile.js'
+import genericUseCaseCreateFile from '../../assets/useCase/genericUseCaseCreateFile.js'
+import genericUseCaseUpdateFile from '../../assets/useCase/genericUseCaseUpdateFile.js'
+import genericUseCaseDeleteFile from '../../assets/useCase/genericUseCaseDeleteFile.js'
+import genericIUseCaseFindFile from '../../assets/useCase/genericIUseCaseFindFile.js'
+import genericIUseCaseCreateFile from '../../assets/useCase/genericIUseCaseCreateFile.js'
+import genericIUseCaseUpdateFile from '../../assets/useCase/genericIUseCaseUpdateFile.js'
+import genericIUseCaseDeleteFile from '../../assets/useCase/genericIUseCaseDeleteFile.js'
 
 const service = {
   create: async (name, path) => {
     // console.log('creating service...', name, path)
     try {
-      console.info('creating service...', name, path, resolve(path))
+      // console.info('creating service...', name, path, resolve(path))
       await fs.mkdir(`${path}services/${name}Service`)
       await fs.mkdir(`${path}services/${name}Service/src`)
       await fs.mkdir(`${path}services/${name}Service/src/functions`)
@@ -35,7 +51,7 @@ container.bind<I${name.charAt(0).toUpperCase()}${name.substring(1)}UseCase>(TYPE
 container.bind<I${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter>(TYPES.${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter).to(${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter);
 //#endregion
 `)
-      console.log('updatedInversifyConfig', updatedInversifyConfig)
+      // console.log('updatedInversifyConfig', updatedInversifyConfig)
       await fs.writeFile(`${path}services/${name}Service/src/inversify.config.ts`, updatedInversifyConfig)
       await fs.appendFile(`${path}/services/${name}Service/serverless.ts`, generic.serverlessFile(name))
       await fs.appendFile(`${path}/services/${name}Service/tsconfig.json`, generic.tsconfigFile())
@@ -44,7 +60,7 @@ container.bind<I${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter>(TYPE
       await fs.appendFile(`${path}/services/${name}Service/src/functions/${name}/index.ts`, generic.serviceIndexFile(name))
       await fs.appendFile(`${path}/services/${name}Service/src/functions/${name}/handler.ts`, generic.handlerFile(name))
       await fs.appendFile(`${path}/services/${name}Service/src/libs/handler-resolver.ts`, generic.handlerResolverFile(name))
-      console.log(generic.typesFile())
+      // console.log(generic.typesFile())
       if (!existsSync(`${path}src/types.ts`))
         await fs.appendFile(`${path}src/types.ts`, generic.typesFile())
       const types = await fs.readFile(`${path}/src/types.ts`)
@@ -56,32 +72,44 @@ container.bind<I${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter>(TYPE
   ${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter: Symbol.for("${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter"),
   //#endregion
 `)
-      console.log('updatedTypes', updatedTypes)
+      // console.log('updatedTypes', updatedTypes)
       await fs.writeFile(`${path}src/types.ts`, updatedTypes)
-      console.log('path', resolve(path))
+      // console.log('path', resolve(path))
       await fs.mkdir(`${path}src/modules/${name}/`)
       await fs.mkdir(`${path}src/modules/${name}/adapter`)
-      await fs.mkdir(`${path}src/modules/${name}/adapter/implementation`)
-      await fs.appendFile(`${path}src/modules/${name}/adapter/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter.ts`)
-      await fs.mkdir(`${path}src/modules/${name}/adapter/interface`)
-      await fs.appendFile(`${path}src/modules/${name}/adapter/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter.ts`)
+      // await fs.mkdir(`${path}src/modules/${name}/adapter/implementation`)
+      await fs.appendFile(`${path}src/modules/${name}/adapter/${name.charAt(0).toUpperCase()}${name.substring(1)}FindAdapter.ts`, genericAdapterFindFile(name))
+      await fs.appendFile(`${path}src/modules/${name}/adapter/${name.charAt(0).toUpperCase()}${name.substring(1)}CreateAdapter.ts`, genericAdapterCreateFile(name))
+      await fs.appendFile(`${path}src/modules/${name}/adapter/${name.charAt(0).toUpperCase()}${name.substring(1)}UpdateAdapter.ts`, genericAdapterUpdateFile(name))
+      await fs.appendFile(`${path}src/modules/${name}/adapter/${name.charAt(0).toUpperCase()}${name.substring(1)}DeleteAdapter.ts`, genericAdapterDeleteFile(name))
+      // await fs.mkdir(`${path}src/modules/${name}/adapter/interface`)
+      // await fs.appendFile(`${path}src/modules/${name}/adapter/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter.ts`)
       await fs.mkdir(`${path}src/modules/${name}/domain`)
       await fs.mkdir(`${path}src/modules/${name}/domain/entity`)
-      await fs.appendFile(`${path}src/modules/${name}/domain/entity/${name.charAt(0).toUpperCase()}${name.substring(1)}.ts`)
+      await fs.mkdir(`${path}src/modules/${name}/domain/entity/implementation`)
+      await fs.mkdir(`${path}src/modules/${name}/domain/entity/interface`)
+      await fs.appendFile(`${path}src/modules/${name}/domain/entity/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}.ts`, genericEntityFile(name))
+      await fs.appendFile(`${path}src/modules/${name}/domain/entity/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}.ts`, genericIEntityFile(name))
       await fs.mkdir(`${path}src/modules/${name}/domain/repository`)
       await fs.mkdir(`${path}src/modules/${name}/domain/repository/implementation`)
-      await fs.appendFile(`${path}src/modules/${name}/domain/repository/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}Repository.ts`)
+      await fs.appendFile(`${path}src/modules/${name}/domain/repository/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}Repository.ts`, genericRepositoryFile(name))
       await fs.mkdir(`${path}src/modules/${name}/domain/repository/interface`)
-      await fs.appendFile(`${path}src/modules/${name}/domain/repository/adapter/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository.ts`)
+      await fs.appendFile(`${path}src/modules/${name}/domain/repository/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository.ts`, genericIRepositoryFile(name))
       await fs.mkdir(`${path}src/modules/${name}/useCase`)
       await fs.mkdir(`${path}src/modules/${name}/useCase/implementation`)
-      await fs.appendFile(`${path}src/modules/${name}/useCase/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}UseCase.ts`)
+      await fs.appendFile(`${path}src/modules/${name}/useCase/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}FindUseCase.ts`, genericUseCaseFindFile(name))
+      await fs.appendFile(`${path}src/modules/${name}/useCase/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}CreateUseCase.ts`, genericUseCaseCreateFile(name))
+      await fs.appendFile(`${path}src/modules/${name}/useCase/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}UpdateUseCase.ts`, genericUseCaseUpdateFile(name))
+      await fs.appendFile(`${path}src/modules/${name}/useCase/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}DeleteUseCase.ts`, genericUseCaseDeleteFile(name))
       await fs.mkdir(`${path}src/modules/${name}/useCase/interface`)
-      await fs.appendFile(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}UseCase.ts`)
+      await fs.appendFile(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}FindUseCase.ts`, genericIUseCaseFindFile(name))
+      await fs.appendFile(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}CreateUseCase.ts`, genericIUseCaseCreateFile(name))
+      await fs.appendFile(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}UpdateUseCase.ts`, genericIUseCaseUpdateFile(name))
+      await fs.appendFile(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}DeleteUseCase.ts`, genericIUseCaseDeleteFile(name))
       // const createService = await fs.writeFile(`${path}/${name}.js`, `const ${name} = {};\n\nexport default ${name};`)
       return { result: 0, error: null }
     } catch (error) {
-      console.error('service.js.service error', error)
+      // console.error('service.js.service error', error)
       return { result: 1, error }
     }
     
