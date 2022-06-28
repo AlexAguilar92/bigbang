@@ -185,6 +185,36 @@ export default interface I${name.charAt(0).toUpperCase()}${name.substring(1)}Rep
 `
 )
 
+const adapterFile = (name) => (
+`import "reflect-metadata";
+
+import { injectable, inject } from "inversify";
+
+import { TYPES } from "../../../../types";
+
+/**
+ * @class ${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter
+ * @implements {I${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter}
+ * @description
+ */
+
+@injectable()
+export class ${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter implements IBaseAdapter {
+
+  constructor() {}
+
+  /**
+   * @function findBanksByPagination
+   * @param 
+   * @returns
+   * @memberof IBankDomain
+   * @throws {Error}
+   */
+  async findBanksByPagination(pagination: IPaginationQueryDTO): Promise<IPaginationResponseDTO> {
+  }
+}
+`)
+
 export default {
   genericService,
   serverlessFile,
