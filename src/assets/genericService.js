@@ -210,7 +210,7 @@ export class ${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter implemen
    * @memberof IBankDomain
    * @throws {Error}
    */
-  async findBanksByPagination(pagination: IPaginationQueryDTO): Promise<IPaginationResponseDTO> {
+  async execute(pagination: IPaginationQueryDTO): Promise<IPaginationResponseDTO> {
   }
 }
 `)

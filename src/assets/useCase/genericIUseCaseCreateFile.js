@@ -1,0 +1,20 @@
+const genericIUseCaseUpdateFile = (name) => (
+  `/**
+   * @interface I${name.charAt(0).toUpperCase()}${name.substring(1)}UpdateUseCase
+   * @description
+   */
+  
+  @injectable()
+  export default interface I${name.charAt(0).toUpperCase()}${name.substring(1)}UpdateUseCase {
+  
+    /**
+     * @function execute
+     * @param 
+     * @returns
+     */
+    async execute() {
+    }
+  }
+  `)
+  
+  export default genericIUseCaseUpdateFile
