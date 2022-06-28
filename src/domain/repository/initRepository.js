@@ -6,7 +6,7 @@ const initFindRepository = async (name = '') => {
     await git.clone(
       'https://github.com/fbenitez/serverless-tsc-template.git',
       name,
-      { '--branch': 'serverless-compose' }
+      { '--branch': 'serverless-2.0' }
     );
     return { result: 0, error: null };
   } catch (error) {
