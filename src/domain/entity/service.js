@@ -35,12 +35,12 @@ const service = {
       let updatedInversifyConfig = inversifyConfig.toString().replace('/** Inversify Imports */',
 `/** Inversify Imports */
 //#region ${name.charAt(0).toUpperCase()}${name.substring(1)} imports
-import I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository from '../../../../src/modules/${name.charAt(0).toUpperCase()}${name.substring(1)}/domain/repository/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository';
-import ${name.charAt(0).toUpperCase()}${name.substring(1)}Repository from '../../../../src/modules/${name.charAt(0).toUpperCase()}${name.substring(1)}/domain/repository/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}Repository';
-import I${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter from '../../../../src/modules/${name.charAt(0).toUpperCase()}${name.substring(1)}/adapter/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter';
-import ${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter from '../../../../src/modules/${name.charAt(0).toUpperCase()}${name.substring(1)}/adapter/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter';
-import I${name.charAt(0).toUpperCase()}${name.substring(1)}UseCase from '../../../../src/modules/${name.charAt(0).toUpperCase()}${name.substring(1)}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}UseCase';
-import ${name.charAt(0).toUpperCase()}${name.substring(1)}UseCase from '../../../../src/modules/${name.charAt(0).toUpperCase()}${name.substring(1)}/useCase/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}UseCase';
+import I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository from '../../../../src/modules/${name}/domain/repository/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository';
+import ${name.charAt(0).toUpperCase()}${name.substring(1)}Repository from '../../../../src/modules/${name}/domain/repository/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}Repository';
+import I${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter from '../../../../src/modules/${name}/adapter/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter';
+import ${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter from '../../../../src/modules/${name}/adapter/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter';
+import I${name.charAt(0).toUpperCase()}${name.substring(1)}UseCase from '../../../../src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}UseCase';
+import ${name.charAt(0).toUpperCase()}${name.substring(1)}UseCase from '../../../../src/modules/${name}/useCase/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}UseCase';
 //#endregion
 `)
       updatedInversifyConfig = updatedInversifyConfig.replace('/** Inversify Bindings */',
@@ -102,7 +102,8 @@ container.bind<I${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter>(TYPE
       await fs.appendFile(`${path}src/modules/${name}/useCase/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}UpdateUseCase.ts`, genericUseCaseUpdateFile(name))
       await fs.appendFile(`${path}src/modules/${name}/useCase/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}DeleteUseCase.ts`, genericUseCaseDeleteFile(name))
       await fs.mkdir(`${path}src/modules/${name}/useCase/interface`)
-      await fs.appendFile(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}FindUseCase.ts`, genericIUseCaseFindFile(name))
+      if (!existsSync(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}FindUseCase.ts`))
+        await fs.appendFile(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}FindUseCase.ts`, genericIUseCaseFindFile(name))
       await fs.appendFile(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}CreateUseCase.ts`, genericIUseCaseCreateFile(name))
       await fs.appendFile(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}UpdateUseCase.ts`, genericIUseCaseUpdateFile(name))
       await fs.appendFile(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}DeleteUseCase.ts`, genericIUseCaseDeleteFile(name))
