@@ -1,11 +1,13 @@
-const repositoryFile = (name) => (
-`import "reflect-metadata";
+const repositoryFile = (name) => (`import "reflect-metadata";
 import { inject, injectable } from "inversify";
-import { BaseRepository, IUserRepository } from "../..";
-import { ${name.charAt(0).toUpperCase()}${name.substring(1)} } from "../";
-import IDBConnectionManager from "../../../shared/database/interface/IDBConnectionManager";
-import TYPES from "../../../types";
 import { EntityRepository } from "typeorm";
+
+import { TYPES } from '../../../../../types';
+import IDBConnectionManager from '../../../../../shared/database/interface/IDBConnectionManager';
+import BaseRepository from '../../../../common/domain/repository/implementation/BaseRepository';
+
+import ${name.charAt(0).toUpperCase()}${name.substring(1)} from '../../entity/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}';
+import I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository from '../interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository';
 
 @injectable()
 @EntityRepository(${name.charAt(0).toUpperCase()}${name.substring(1)})

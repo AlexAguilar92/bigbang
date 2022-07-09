@@ -10,7 +10,7 @@ const serverlessFile = (name) => (
   const serverlessConfiguration: AWS = {
     service: '${ name }',
     frameworkVersion: '3',
-    plugins: ['serverless-esbuild'],
+    plugins: ['serverless-esbuild', 'serverless-offline'],
     provider: {
       name: 'aws',
       runtime: 'nodejs14.x',
@@ -31,7 +31,7 @@ const serverlessFile = (name) => (
         bundle: true,
         minify: false,
         sourcemap: true,
-        exclude: ['aws-sdk'],
+        exclude: ['aws-sdk', 'pg-native'],
         target: 'node14',
         define: { 'require.resolve': undefined },
         platform: 'node',
@@ -111,41 +111,53 @@ const serviceIndexFile = (name) => (
 )
 
 const handlerFile = (name) => (
-  `import container from "../../inversify.config";
-import middy from "@middy/core";
-import httpJsonBodyParser from "@middy/http-json-body-parser";
-import { TYPES } from "../../../../../src/types";
+  `import { middyfy } from '../../libs/lambda';
+import container from '../../inversify.config';
+import { TYPES } from '../../../../../src/types';
 
-const get${name.charAt(0).toUpperCase()}${name.substring(1)} = middy(async (event) => {
+import httpResponseHandlerMiddleware from '../../../../../src/middleware/httpResponseHandlerMiddleware';
+
+const get${name.charAt(0).toUpperCase()}${name.substring(1)} = middyfy(async (event) => {
   const i${name.charAt(0).toUpperCase()}${name.substring(1)}Repository = container.get<I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository>(TYPES.${name.charAt(0).toUpperCase()}${name.substring(1)}Repository);
-  const response = await i${name.charAt(0).toUpperCase()}${name.substring(1)}Repository.findMany(event.queryStringParameters);
+  const response = await i${name.charAt(0).toUpperCase()}${name.substring(1)}Repository.find();
   return response;
 });
 
 get${name.charAt(0).toUpperCase()}${name.substring(1)}.use(httpResponseHandlerMiddleware());
 
-export const main = middyfy(${name});
+export const main = get${name.charAt(0).toUpperCase()}${name.substring(1)};
   `
 )
 
-const handlerResolverFile = () => (
-`
+const handlerResolverFile = () => (`
 export const handlerPath = (context: string) => {
   return \`\${context.split(process.cwd())[1].substring(1).replace(/\\\\/g, '/')}\`
 };  
 `
 )
 
+const lambdaHelperFile = () => (
+  `import middy from "@middy/core"
+  import middyJsonBodyParser from "@middy/http-json-body-parser"
+  
+  export const middyfy = (handler) => {
+    return middy(handler).use(middyJsonBodyParser())
+  }
+  `
+)
+
 const inversifyConfigFile = () => (
   `import 'reflect-metadata';
 import { Container } from 'inversify';
-import { TYPES } from './types';
+import { TYPES } from '../../../src/types';
 
 /** Inversify Imports */
 
 const container: Container = new Container();
 
 /** Inversify Bindings */
+
+export default container;
 `
 )
 
@@ -167,5 +179,6 @@ export default {
   handlerFile,
   handlerResolverFile,
   inversifyConfigFile,
-  typesFile
+  typesFile,
+  lambdaHelperFile
 };

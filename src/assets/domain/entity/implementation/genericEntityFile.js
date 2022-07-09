@@ -1,7 +1,7 @@
-const genericEntityFile = (name) => (
-`import { Entity } from 'typeorm';
-import BaseEntity from './BaseEntity';
-import I${name.charAt(0).toUpperCase()}${name.substring(1)} from '../'
+const genericEntityFile = (name) => (`import { Entity } from 'typeorm';
+import BaseEntity from '../../../../common/domain/entity/implementation/BaseEntity';
+
+import I${name.charAt(0).toUpperCase()}${name.substring(1)} from '../interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}';
 
 /**
 * class ${name.charAt(0).toUpperCase()}${name.substring(1)}
