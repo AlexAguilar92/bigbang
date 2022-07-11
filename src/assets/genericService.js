@@ -111,13 +111,13 @@ const serviceIndexFile = (name) => (
 )
 
 const handlerFile = (name) => (
-  `import { middyfy } from '../../libs/lambda';
+  `
 import container from '../../inversify.config';
 import { TYPES } from '../../../../../src/types';
 
 import httpResponseHandlerMiddleware from '../../../../../src/middleware/httpResponseHandlerMiddleware';
 
-const get${name.charAt(0).toUpperCase()}${name.substring(1)} = middyfy(async (event) => {
+const get${name.charAt(0).toUpperCase()}${name.substring(1)} = middy(async (event) => {
   const i${name.charAt(0).toUpperCase()}${name.substring(1)}Repository = container.get<I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository>(TYPES.${name.charAt(0).toUpperCase()}${name.substring(1)}Repository);
   const response = await i${name.charAt(0).toUpperCase()}${name.substring(1)}Repository.find();
   return response;

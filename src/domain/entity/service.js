@@ -31,30 +31,30 @@ const service = {
       await fs.mkdir(`${path}services/${name}Service/src/functions/${name}`)
       if (!existsSync(`${path}services/${name}Service/src/inversify.config.ts`))
         await fs.appendFile(`${path}services/${name}Service/src/inversify.config.ts`, generic.inversifyConfigFile())
-      const inversifyConfig = await fs.readFile(`${path}services/${name}Service/src/inversify.config.ts`)
-      let updatedInversifyConfig = inversifyConfig.toString().replace('/** Inversify Imports */', `/** Inversify Imports */
-//#region DBConnectionManager imports
-import IDBConnectionManager from '../../../src/shared/database/interface/IDBConnectionManager';
-import DBConnectionManager from '../../../src/shared/database/implementation/DBConnectionManager';
-//#endregion
+      // const inversifyConfig = await fs.readFile(`${path}services/${name}Service/src/inversify.config.ts`)
+//       let updatedInversifyConfig = inversifyConfig.toString().replace('/** Inversify Imports */', `/** Inversify Imports */
+// //#region DBConnectionManager imports
+// import IDBConnectionManager from '../../../src/shared/database/interface/IDBConnectionManager';
+// import DBConnectionManager from '../../../src/shared/database/implementation/DBConnectionManager';
+// //#endregion
 
-// #region ${name.charAt(0).toUpperCase()}${name.substring(1)}Repositry imports
-import I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository from '../../../src/modules/${name.charAt(0).toUpperCase()}${name.substring(1)}/domain/repository/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository';
-import ${name.charAt(0).toUpperCase()}${name.substring(1)}Repository from '../../../src/modules/${name.charAt(0).toUpperCase()}${name.substring(1)}/domain/repository/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}Repository';
-//#endregion
-`)
-      updatedInversifyConfig = updatedInversifyConfig.replace('/** Inversify Bindings */', `/** Inversify Bindings */
-//#region DBConnectionManager bindings
-container.bind<IDBConnectionManager>(TYPES.DBConnectionManager).to(DBConnectionManager);
-//#endregion
+// // #region ${name.charAt(0).toUpperCase()}${name.substring(1)}Repositry imports
+// import I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository from '../../../src/modules/${name.charAt(0).toUpperCase()}${name.substring(1)}/domain/repository/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository';
+// import ${name.charAt(0).toUpperCase()}${name.substring(1)}Repository from '../../../src/modules/${name.charAt(0).toUpperCase()}${name.substring(1)}/domain/repository/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}Repository';
+// //#endregion
+// `)
+//       updatedInversifyConfig = updatedInversifyConfig.replace('/** Inversify Bindings */', `/** Inversify Bindings */
+// //#region DBConnectionManager bindings
+// container.bind<IDBConnectionManager>(TYPES.DBConnectionManager).to(DBConnectionManager);
+// //#endregion
 
-//#region ${name.charAt(0).toUpperCase()}${name.substring(1)}Repository bindings
-container.bind<I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository>(TYPES.${name.charAt(0).toUpperCase()}${name.substring(1)}Repository).to(${name.charAt(0).toUpperCase()}${name.substring(1)}Repository);
-//#endregion
+// //#region ${name.charAt(0).toUpperCase()}${name.substring(1)}Repository bindings
+// container.bind<I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository>(TYPES.${name.charAt(0).toUpperCase()}${name.substring(1)}Repository).to(${name.charAt(0).toUpperCase()}${name.substring(1)}Repository);
+// //#endregion
 
-`)
+// `)
       // console.log('updatedInversifyConfig', updatedInversifyConfig)
-      await fs.writeFile(`${path}services/${name}Service/src/inversify.config.ts`, updatedInversifyConfig)
+      // await fs.writeFile(`${path}services/${name}Service/src/inversify.config.ts`, updatedInversifyConfig)
       await fs.appendFile(`${path}/services/${name}Service/serverless.ts`, generic.serverlessFile(name))
       await fs.appendFile(`${path}/services/${name}Service/tsconfig.json`, generic.tsconfigFile())
       await fs.appendFile(`${path}/services/${name}Service/tsconfig.paths.json`, generic.tsconfigPathsFile(name))
@@ -81,9 +81,9 @@ container.bind<I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository>(T
       await fs.mkdir(`${path}src/modules/${name}/adapter`)
       // await fs.mkdir(`${path}src/modules/${name}/adapter/implementation`)
       await fs.appendFile(`${path}src/modules/${name}/adapter/${name.charAt(0).toUpperCase()}${name.substring(1)}FindAdapter.ts`, genericAdapterFindFile(name))
-      await fs.appendFile(`${path}src/modules/${name}/adapter/${name.charAt(0).toUpperCase()}${name.substring(1)}CreateAdapter.ts`, genericAdapterCreateFile(name))
-      await fs.appendFile(`${path}src/modules/${name}/adapter/${name.charAt(0).toUpperCase()}${name.substring(1)}UpdateAdapter.ts`, genericAdapterUpdateFile(name))
-      await fs.appendFile(`${path}src/modules/${name}/adapter/${name.charAt(0).toUpperCase()}${name.substring(1)}DeleteAdapter.ts`, genericAdapterDeleteFile(name))
+      // await fs.appendFile(`${path}src/modules/${name}/adapter/${name.charAt(0).toUpperCase()}${name.substring(1)}CreateAdapter.ts`, genericAdapterCreateFile(name))
+      // await fs.appendFile(`${path}src/modules/${name}/adapter/${name.charAt(0).toUpperCase()}${name.substring(1)}UpdateAdapter.ts`, genericAdapterUpdateFile(name))
+      // await fs.appendFile(`${path}src/modules/${name}/adapter/${name.charAt(0).toUpperCase()}${name.substring(1)}DeleteAdapter.ts`, genericAdapterDeleteFile(name))
       // await fs.mkdir(`${path}src/modules/${name}/adapter/interface`)
       // await fs.appendFile(`${path}src/modules/${name}/adapter/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}Adapter.ts`)
       await fs.mkdir(`${path}src/modules/${name}/domain`)
@@ -100,10 +100,10 @@ container.bind<I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository>(T
       await fs.mkdir(`${path}src/modules/${name}/useCase`)
       await fs.mkdir(`${path}src/modules/${name}/useCase/implementation`)
       await fs.appendFile(`${path}src/modules/${name}/useCase/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}FindUseCase.ts`, genericUseCaseFindFile(name))
-      await fs.appendFile(`${path}src/modules/${name}/useCase/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}CreateUseCase.ts`, genericUseCaseCreateFile(name))
-      await fs.appendFile(`${path}src/modules/${name}/useCase/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}UpdateUseCase.ts`, genericUseCaseUpdateFile(name))
-      await fs.appendFile(`${path}src/modules/${name}/useCase/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}DeleteUseCase.ts`, genericUseCaseDeleteFile(name))
-      await fs.mkdir(`${path}src/modules/${name}/useCase/interface`)
+      // await fs.appendFile(`${path}src/modules/${name}/useCase/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}CreateUseCase.ts`, genericUseCaseCreateFile(name))
+      // await fs.appendFile(`${path}src/modules/${name}/useCase/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}UpdateUseCase.ts`, genericUseCaseUpdateFile(name))
+      // await fs.appendFile(`${path}src/modules/${name}/useCase/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}DeleteUseCase.ts`, genericUseCaseDeleteFile(name))
+      // await fs.mkdir(`${path}src/modules/${name}/useCase/interface`)
       if (!existsSync(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}FindUseCase.ts`))
         await fs.appendFile(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}FindUseCase.ts`, genericIUseCaseFindFile(name))
       await fs.appendFile(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}CreateUseCase.ts`, genericIUseCaseCreateFile(name))
