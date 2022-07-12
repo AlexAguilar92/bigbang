@@ -18,6 +18,8 @@ import genericIUseCaseFindFile from '../../assets/useCase/genericIUseCaseFindFil
 import genericIUseCaseCreateFile from '../../assets/useCase/genericIUseCaseCreateFile.js'
 import genericIUseCaseUpdateFile from '../../assets/useCase/genericIUseCaseUpdateFile.js'
 import genericIUseCaseDeleteFile from '../../assets/useCase/genericIUseCaseDeleteFile.js'
+import genericIModelFile from '../../assets/model/interface/genericIModelFile.js'
+import genericModelFile from '../../assets/model/implementation/genericModelFile.js'
 
 const service = {
   create: async (name, path) => {
@@ -104,12 +106,18 @@ const service = {
       // await fs.appendFile(`${path}src/modules/${name}/useCase/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}UpdateUseCase.ts`, genericUseCaseUpdateFile(name))
       // await fs.appendFile(`${path}src/modules/${name}/useCase/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}DeleteUseCase.ts`, genericUseCaseDeleteFile(name))
       // await fs.mkdir(`${path}src/modules/${name}/useCase/interface`)
-      if (!existsSync(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}FindUseCase.ts`))
-        await fs.appendFile(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}FindUseCase.ts`, genericIUseCaseFindFile(name))
-      await fs.appendFile(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}CreateUseCase.ts`, genericIUseCaseCreateFile(name))
-      await fs.appendFile(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}UpdateUseCase.ts`, genericIUseCaseUpdateFile(name))
-      await fs.appendFile(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}DeleteUseCase.ts`, genericIUseCaseDeleteFile(name))
+      // if (!existsSync(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}FindUseCase.ts`))
+      await fs.appendFile(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}FindUseCase.ts`, genericIUseCaseFindFile(name))
+      // await fs.appendFile(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}CreateUseCase.ts`, genericIUseCaseCreateFile(name))
+      // await fs.appendFile(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}UpdateUseCase.ts`, genericIUseCaseUpdateFile(name))
+      // await fs.appendFile(`${path}src/modules/${name}/useCase/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}DeleteUseCase.ts`, genericIUseCaseDeleteFile(name))
       // const createService = await fs.writeFile(`${path}/${name}.js`, `const ${name} = {};\n\nexport default ${name};`)
+
+      await fs.mkdir(`${path}src/model/${name}`)
+      await fs.mkdir(`${path}src/model/${name}/implementation`)
+      await fs.mkdir(`${path}src/model/${name}/interface`)
+      await fs.appendFile(`${path}src/model/${name}/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}Model.ts`, genericIModelFile(name))
+      await fs.appendFile(`${path}src/model/${name}/interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}Model.ts`, genericModelFile(name))
       return { result: 0, error: null }
     } catch (error) {
       // console.error('service.js.service error', error)
