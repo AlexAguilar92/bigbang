@@ -1,4 +1,4 @@
-const genericEntityFile = (name) => (`import I${name.charAt(0).toUpperCase()}${name.substring(1)} from '../interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}Domain';
+const genericEntityFile = (name) => (`import I${name.charAt(0).toUpperCase()}${name.substring(1)}Domain from '../interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}Domain';
 
 /**
 * class ${name.charAt(0).toUpperCase()}${name.substring(1)}Domain
