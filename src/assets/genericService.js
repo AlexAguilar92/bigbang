@@ -114,6 +114,7 @@ const handlerFile = (name) => (
   `
 import container from '../../inversify.config';
 import { TYPES } from '../../../../../src/types';
+import middy from '@middy/core';
 
 import httpResponseHandlerMiddleware from '../../../../../src/middleware/httpResponseHandlerMiddleware';
 
