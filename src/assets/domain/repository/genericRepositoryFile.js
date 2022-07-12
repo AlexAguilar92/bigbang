@@ -6,7 +6,6 @@ import { TYPES } from '../../../../../types';
 import IDBConnectionManager from '../../../../../shared/database/interface/IDBConnectionManager';
 import BaseRepository from '../../../../common/domain/repository/implementation/BaseRepository';
 
-import ${name.charAt(0).toUpperCase()}${name.substring(1)} from '../../entity/implementation/${name.charAt(0).toUpperCase()}${name.substring(1)}';
 import I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository from '../interface/I${name.charAt(0).toUpperCase()}${name.substring(1)}Repository';
 
 @injectable()
