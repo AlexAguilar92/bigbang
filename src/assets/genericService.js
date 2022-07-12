@@ -11,6 +11,7 @@ const serverlessFile = (name) => (
     service: '${ name }',
     frameworkVersion: '3',
     plugins: ['serverless-esbuild', 'serverless-offline'],
+    useDotenv: true,
     provider: {
       name: 'aws',
       runtime: 'nodejs14.x',
