@@ -12,7 +12,7 @@ import { TYPES } from "../../../../types";
  */
 
 @injectable()
-export class ${name.charAt(0).toUpperCase()}${name.substring(1)}CreateAdapter<I${name.charAt(0).toUpperCase()}${name.substring(1)}CreateQueryDTO, Promise<I${name.charAt(0).toUpperCase()}${name.substring(1)}CreateResponseDTO>> implements IBaseAdapter {
+export default class ${name.charAt(0).toUpperCase()}${name.substring(1)}CreateAdapter<I${name.charAt(0).toUpperCase()}${name.substring(1)}CreateQueryDTO, Promise<I${name.charAt(0).toUpperCase()}${name.substring(1)}CreateResponseDTO>> implements IBaseAdapter {
 
   constructor() {}
 
